@@ -1,0 +1,23 @@
+# To build a native image, do following steps
+# download graalvm, https://www.graalvm.org/downloads/
+export JAVA_HOME=/home/a391042/Development/DevTools/JDK/graalvm-jdk-17_linux-x64_bin
+export PATH=/home/a391042/Development/DevTools/JDK/graalvm-jdk-17_linux-x64_bin/bin:$PATH
+
+./gradlew nativeCompile
+
+cd ./build/native/nativeCompile/
+./service-server
+
+
+# Notes:
+export SPRING_DATASOURCE_URL=jdbc:postgres://localhost/bp
+export SPRING_DATASOURCE_USERNAME=bp
+export SPRING_DATASOURCE_PASSWORD=bp
+
+# Run docker image with these env configurations then start the service-server
+
+# After the server starts, look for PID (Process Identifier), Assume PID=7100
+-> ps -o rss 7100
+
+# To create native image
+./gradlew bootBuildImage
